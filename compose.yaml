@@ -1,0 +1,36 @@
+services:
+  app:
+    build:
+      context: .
+    tty: true
+    volumes:
+      - ./src:/app
+    environment:
+      - WATCHPACK_POLLING=true
+      # Prismaが使用するデータベースURLを定義
+      - DATABASE_URL=postgresql://user:password@db:5432/myapp_db?schema=public
+    command: sh -c "npm run dev"
+    ports:
+      - "3000:3000"
+      - "5555:5555" # ⭐︎Prisma Studioのために追加: コンテナの5555ポートをホストの5555ポートにマッピング
+    # appサービスがdbサービスに依存することを定義
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16 # 使用したいPostgreSQLのバージョンを指定（例: 16）
+    restart: always
+    environment:
+      POSTGRES_USER: user # データベースのユーザー名を設定
+      POSTGRES_PASSWORD: password # ユーザーのパスワードを設定 (本番環境ではsecretsなどを使用すべき)
+      POSTGRES_DB: myapp_db # 作成したいデータベース名を設定
+    volumes:
+      # データベースデータを永続化するための名前付きボリュームを作成
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      # ホストのポート5432をコンテナのポート5432にマッピング（任意）
+      - "5432:5432"
+
+volumes:
+  # 永続化ボリュームを定義
+  postgres_data:
