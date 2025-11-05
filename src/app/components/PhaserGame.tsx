@@ -1,72 +1,71 @@
-import React, { useEffect, useRef } from 'react';
-import Phaser from 'phaser';
+import React, { useEffect, useRef, useMemo } from 'react';
+import * as Phaser from 'phaser';
+// ⭐ 独立させたシーンファイルをインポート ⭐
+import { HelloScene } from '@/scenes/HelloScene';
+// ↑ パスはプロジェクトの構造に合わせて調整してください。
 
-// ゲームシーンの定義（ここでは簡単な例）
-class MainScene extends Phaser.Scene {
-  constructor() {
-    super({ key: 'MainScene' });
-  }
-
-  preload() {
-    // 画像などのリソースを読み込む
-    this.load.image('logo', './assets/phaser-logo.png'); // publicフォルダに画像を配置
-  }
-
-  create() {
-    // 画面中央に画像を配置し、回転アニメーションを設定
-    const logo = this.add.image(400, 300, 'logo');
-    logo.setOrigin(0.5, 0.5);
-    this.tweens.add({
-      targets: logo,
-      angle: 100,
-      duration: 2000,
-      repeat: -1, // 永久に繰り返す
-    });
-  }
-
-  update() {
-    // フレームごとの更新処理
-  }
-}
-
+// ------------------------------------------------------------------
+// ⭐ PhaserGame コンポーネント (ゲーム本体) ⭐
+// ------------------------------------------------------------------
 const PhaserGame: React.FC = () => {
-  const gameRef = useRef<HTMLDivElement>(null);
-  const gameInstance = useRef<Phaser.Game | null>(null);
+  const gameContainerRef = useRef<HTMLDivElement>(null);
+  const gameRef = useRef<Phaser.Game | null>(null);
 
   useEffect(() => {
-    // 既にゲームインスタンスが存在する場合は何もしない（再レンダリング防止）
-    if (gameInstance.current) {
-      return;
-    }
+    // 既にゲームがあれば処理しない (キーが変更されたらこれは常に false)
+    if (gameRef.current) return;
 
-    // Phaserゲーム設定
+    // ゲーム設定
     const config: Phaser.Types.Core.GameConfig = {
-      type: Phaser.AUTO, // WebGLまたはCanvasを選択
-      width: 800,
+      type: Phaser.AUTO,
+      width: 600,
       height: 600,
-      parent: gameRef.current || 'phaser-game-container', // ゲームを描画するHTML要素
-      scene: [MainScene],
-      physics: {
-        default: 'arcade',
-        arcade: {
-          gravity: { x: 0, y: 0 },
-          debug: false,
-        },
-      },
+      parent: gameContainerRef.current as HTMLElement, // この div に描画
+      scene: HelloScene,
+      backgroundColor: '#1e1e1e',
     };
 
-    // Phaserゲームを起動
-    const game = new Phaser.Game(config);
-    gameInstance.current = game;
+    // ゲームインスタンスの作成
+    gameRef.current = new Phaser.Game(config);
 
-    // コンポーネントがアンマウントされるときにゲームを破棄
+    // クリーンアップ処理: コンポーネントが破棄されるときにゲームを破壊
     return () => {
-      game.destroy(true);
-      gameInstance.current = null;
+      if (gameRef.current) {
+        console.log('Phaser Game Destroyed for Hot Reload.');
+        gameRef.current.destroy(true);
+        gameRef.current = null;
+      }
     };
   }, []);
 
-  return <div ref={gameRef} style={{ width: 800, height: 600 }} />;
+  return (
+    <div
+      ref={gameContainerRef}
+      style={{
+        width: '600px',
+        height: '600px',
+        margin: '20px auto',
+        border: '3px solid #ff0070',
+      }}
+    />
+  );
 };
 
-export default PhaserGame;
+// ------------------------------------------------------------------
+// ⭐ DynamicKeyWrapper コンポーネント (自動リロードの仕掛け) ⭐
+// ------------------------------------------------------------------
+const DynamicKeyWrapper: React.FC = () => {
+  const key = useMemo(() => {
+    if (process.env.NODE_ENV === 'development') {
+      // ⭐ ここが修正点：ESLint のルールを一時的に無視する ⭐
+      // 警告を意図的に無視することで、ホットリロードを強制するハックを維持します。
+      // eslint-disable-next-line react-hooks/purity
+      return Date.now();
+    }
+    return 1;
+  }, []);
+
+  return <PhaserGame key={key} />;
+};
+
+export default DynamicKeyWrapper;
