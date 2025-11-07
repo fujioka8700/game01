@@ -26,7 +26,7 @@ const PhaserGame = () => {
         keyboard: true, // ここでキーボード入力を有効にする
       },
       parent: gameContainerRef.current as HTMLElement, // ゲームを描画するコンテナ要素
-      scene: ScrollScene, //カスタムシーンを指定
+      scene: ScrollScene, // 使用するシーンを指定
       backgroundColor: '#1e1e1e',
     };
 
@@ -45,12 +45,11 @@ const PhaserGame = () => {
   return (
     <div
       ref={gameContainerRef}
-      // スタイルを className に切り出すことも可能ですが、ここではインラインのままに
+      // Phaserゲームが描画されるコンテナのスタイル
       style={{
-        width: '600px',
+        width: '800px',
         height: '600px',
         margin: '20px auto',
-        border: '3px solid #ff0070',
       }}
     />
   );
