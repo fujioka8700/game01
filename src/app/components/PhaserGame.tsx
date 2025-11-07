@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useMemo } from 'react';
 import * as Phaser from 'phaser';
-import { HelloScene } from '@/scenes/HelloScene';
+import { ScrollScene } from '@/scenes/ScrollScene';
 
 const PhaserGame = () => {
   const gameContainerRef = useRef<HTMLDivElement>(null);
@@ -11,15 +11,26 @@ const PhaserGame = () => {
     if (gameRef.current) return;
 
     const config: Phaser.Types.Core.GameConfig = {
-      type: Phaser.AUTO,
-      width: 600,
-      height: 600,
-      parent: gameContainerRef.current as HTMLElement,
-      scene: HelloScene,
+      type: Phaser.AUTO, // レンダリングタイプを指定
+      width: 800, // ゲームの幅
+      height: 600, // ゲームの高さ
+      physics: {
+        // 物理エンジンの設定
+        default: 'arcade', // 使用する物理エンジンを指定
+        arcade: {
+          gravity: { x: 0, y: 300 }, // 重力の方向と強さを指定
+          debug: false, // デバッグモード
+        },
+      },
+      input: {
+        keyboard: true, // ここでキーボード入力を有効にする
+      },
+      parent: gameContainerRef.current as HTMLElement, // ゲームを描画するコンテナ要素
+      scene: ScrollScene, //カスタムシーンを指定
       backgroundColor: '#1e1e1e',
     };
 
-    gameRef.current = new Phaser.Game(config);
+    gameRef.current = new Phaser.Game(config); // Phaserゲームインスタンスを作成
 
     // クリーンアップ: コンポーネントが破棄されるときにゲームを破壊
     return () => {
