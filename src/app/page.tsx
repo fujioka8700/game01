@@ -12,7 +12,7 @@ const DynamicPhaserGame = dynamic(() => import('./components/PhaserGame'), {
 const HomePage: React.FC = () => {
   return (
     <div style={{ textAlign: 'center', fontFamily: 'Arial, sans-serif' }}>
-      <main style={{ textAlign: 'center', padding: '20px' }}>
+      <main style={{ textAlign: 'center' }}>
         <h1>Next.jsで動くPhaserゲーム！</h1>
         <DynamicPhaserGame />
       </main>

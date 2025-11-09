@@ -22,9 +22,14 @@ const PhaserGame = () => {
           debug: false, // デバッグモード
         },
       },
+      scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+      },
       input: {
         keyboard: true, // ここでキーボード入力を有効にする
       },
+
       parent: gameContainerRef.current as HTMLElement, // ゲームを描画するコンテナ要素
       scene: ScrollScene, // 使用するシーンを指定
       backgroundColor: '#1e1e1e',
@@ -47,7 +52,7 @@ const PhaserGame = () => {
       ref={gameContainerRef}
       // Phaserゲームが描画されるコンテナのスタイル
       style={{
-        width: '800px',
+        width: '100vw',
         height: '600px',
         margin: '20px auto',
       }}
