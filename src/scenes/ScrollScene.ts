@@ -215,6 +215,10 @@ export class ScrollScene extends Phaser.Scene {
   }
 
   private restartGame(): void {
+    this._isGameOver = false; // ゲームオーバーフラグをリセット
+
+    this._score = 0; // スコアをリセット
+
     // シーンのリスタート
     this.scene.restart();
   }
