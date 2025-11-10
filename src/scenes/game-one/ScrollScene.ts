@@ -20,19 +20,19 @@ export class ScrollScene extends Phaser.Scene {
 
   preload(): void {
     // アセットの事前読み込み
-    this.load.image('sky', 'assets/sky.png');
-    this.load.image('ground', 'assets/platform.png');
-    this.load.image('star', 'assets/star.png');
-    this.load.image('bomb', 'assets/bomb.png');
+    this.load.image('sky', 'assets/game-one/sky.png');
+    this.load.image('ground', 'assets/game-one/platform.png');
+    this.load.image('star', 'assets/game-one/star.png');
+    this.load.image('bomb', 'assets/game-one/bomb.png');
     this.load.spritesheet(
       'dude', // キー
-      'assets/dude.png', // 画像を指定
+      'assets/game-one/dude.png', // 画像を指定
       { frameWidth: 32, frameHeight: 48 }, // フレームの幅と高さを指定
     );
-    this.load.audio('jumpSound', 'assets/audio/jump.mp3'); // ジャンプ音声
-    this.load.audio('frogMusic', 'assets/audio/frogMusic.mp3'); // 背景音楽
-    this.load.audio('itemGetSound', 'assets/audio/itemGet.mp3'); // アイテム取得音声
-    this.load.audio('gameOver', 'assets/audio/gameOver.mp3'); // ボム音声
+    this.load.audio('jumpSound', 'assets/game-one/audio/jump.mp3'); // ジャンプ音声
+    this.load.audio('frogMusic', 'assets/game-one/audio/frogMusic.mp3'); // 背景音楽
+    this.load.audio('itemGetSound', 'assets/game-one/audio/itemGet.mp3'); // アイテム取得音声
+    this.load.audio('gameOver', 'assets/game-one/audio/gameOver.mp3'); // ボム音声
   }
 
   // 初期設定
