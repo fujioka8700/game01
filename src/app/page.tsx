@@ -6,6 +6,9 @@ const HomePage: React.FC = () => {
     <div>
       <ul>
         <li>
+          <Link href="/sample">サンプル</Link>
+        </li>
+        <li>
           <Link href="/game-one">ゲーム１</Link>
         </li>
         <li>
