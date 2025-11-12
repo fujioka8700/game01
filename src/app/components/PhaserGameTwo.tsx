@@ -15,27 +15,23 @@ const PhaserGame = () => {
 
     const config: Phaser.Types.Core.GameConfig = {
       type: Phaser.AUTO,
-      width: 800,
-      height: 600,
-      physics: {
-        // 物理エンジンの設定
-        default: 'arcade',
-        arcade: {
-          gravity: { x: 0, y: 300 },
-          debug: false,
-        },
-      },
+      width: 600,
+      height: 800,
+      parent: gameContainerRef.current as HTMLElement,
+      scene: MainScene,
+      backgroundColor: '#1e1e1e',
       scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
+        min: {
+          width: 300,
+          height: 400,
+        },
+        max: {
+          width: 800,
+          height: 1000,
+        },
       },
-      input: {
-        keyboard: true,
-      },
-
-      parent: gameContainerRef.current as HTMLElement, // ゲームを描画するコンテナ要素
-      scene: MainScene,
-      backgroundColor: '#0e1e1e',
     };
 
     gameRef.current = new Phaser.Game(config);

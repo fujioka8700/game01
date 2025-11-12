@@ -1,0 +1,58 @@
+[
+  {
+    "id": "001",
+    "text": "「今夜、12時、誰かが……死ぬ？」",
+    "character": "ぼく",
+    "speaker_id": "protagonist",
+    "type": "dialogue"
+  },
+  {
+    "id": "002",
+    "text": "ぼくが読み上げると、みんな一様に息を呑んだ。",
+    "character": "ナレーション",
+    "speaker_id": "narration",
+    "type": "narration"
+  },
+  {
+    "id": "003",
+    "text": "数秒後に、ようやく小林さんが口を開いた。",
+    "character": "ナレーション",
+    "speaker_id": "narration",
+    "type": "narration"
+  },
+  {
+    "id": "004",
+    "text": "「誰かのいたずらでしょう」",
+    "character": "小林さん",
+    "speaker_id": "kobayashi",
+    "type": "dialogue"
+  },
+  {
+    "id": "005",
+    "text": "「……悪趣味ね」",
+    "character": "真理",
+    "speaker_id": "mari",
+    "type": "dialogue"
+  },
+  {
+    "id": "006",
+    "text": "真理が眉をひそめる。",
+    "character": "ナレーション",
+    "speaker_id": "narration",
+    "type": "narration"
+  },
+  {
+    "id": "007",
+    "text": "（これでタイピング機能が動作しているはずです。クリックすると次の行に進みます。）",
+    "character": "システム",
+    "speaker_id": "system",
+    "type": "system"
+  },
+  {
+    "id": "008",
+    "text": "（会話内容を追加します）",
+    "character": "システム",
+    "speaker_id": "system",
+    "type": "system"
+  }
+]
